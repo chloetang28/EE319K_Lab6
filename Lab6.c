@@ -7,7 +7,7 @@
 // Last Modified: 1/17/21  
 // Lab number: 6
 // Hardware connections
-// TO STUDENTS "REMOVE THIS LINE AND SPECIFY YOUR HARDWARE********
+#include "DAC.h"  // TO STUDENTS "REMOVE THIS LINE AND SPECIFY YOUR HARDWARE********
 
 
 #include <stdint.h>
@@ -54,10 +54,26 @@ int staticmain(void){   uint32_t last,now;
   }
 }
 
+/*int testMain(void){
+	DAC_Init();
+	for(int data=0; data<16; data++){
+		DAC_Out(data);
+		for(int j=0; j<10000000; j++); // delay 
+	}
+}
+*/
+int main(void){ uint32_t data; // 0 to 15 DAC output
+  TExaS_Init(SW_PIN_PE3210,DAC_PIN_PB3210,ScopeOn);
+  DAC_Init();
+  for(;;) {
+    DAC_Out(data);
+    data = 0x0F&(data+1); // 0,1,2...,14,15,0,1,2,...
+  }
+}
 
 
 //**************Lab 6 solution below*******************
-
+/*
 int main(void){      
   TExaS_Init(SW_PIN_PE3210,DAC_PIN_PB3210,ScopeOn);    // bus clock at 80 MHz
   Key_Init();
@@ -68,5 +84,6 @@ int main(void){
   while(1){ 
   }           
 }
+*/
 
 
