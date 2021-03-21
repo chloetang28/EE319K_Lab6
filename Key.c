@@ -7,7 +7,7 @@
 // Last Modified: 1/17/21  
 // Lab number: 6
 // Hardware connections
-// TO STUDENTS "REMOVE THIS LINE AND SPECIFY YOUR HARDWARE********
+#include "key.h" // TO STUDENTS "REMOVE THIS LINE AND SPECIFY YOUR HARDWARE********
 
 // Code files contain the actual implemenation for public functions
 // this file also contains an private functions and private data
@@ -20,7 +20,18 @@
 // Output: none
 void Key_Init(void){ 
   // write this
-
+	SYSCTL_RCGCGPIO_R |= 0x10; // Port E
+	
+	__asm__ {
+		NOP
+		NOP
+	}
+	
+	GPIO_PORTE_DIR_R &= ~(0x0F); //PE0-3 = inputs
+	GPIO_PORTE_DEN_R |= 0x0F;
+	
+	GPIO_PORTE_PDR_R |= 0x0F; // pull down for PE0-3
+	
 }
 // **************Key_In*********************
 // Input from piano key inputs on PA5-2 PB3-0 or PE3-0
@@ -29,6 +40,7 @@ void Key_Init(void){
 //   0x01 is just Key0, 0x02 is just Key1, 0x04 is just Key2, 0x08 is just Key3
 uint32_t Key_In(void){ 
   // write this
- return 42;
+	uint8_t keyIn = GPIO_PORTE_DATA_R;
+	keyIn &= 0x0F;
+	return keyIn;
 }
-
