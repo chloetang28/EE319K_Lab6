@@ -41,7 +41,6 @@ void DAC_Init(void){
 // or Input=n is converted to n*3.3V/63
 // Output: none
 void DAC_Out(uint8_t data){
-	// write this
-	data = GPIO_PORTB_DATA_R; 
-	data = (data*3.3)/15; 
+	// write this 
+	GPIO_PORTB_DATA_R = data;
 }
